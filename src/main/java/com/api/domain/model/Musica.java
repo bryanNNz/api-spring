@@ -1,4 +1,4 @@
-package com.api.domain.business;
+package com.api.domain.model;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -48,6 +48,10 @@ public class Musica implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "ART_ID", referencedColumnName = "ART_ID")
 	private Artista artista;
+	
+	@ManyToOne
+	@JoinColumn(name = "GNR_ID", referencedColumnName = "GNR_ID")
+	private GeneroMusical generoMusical;
 	
 	@Lob
 	@Column(name = "MSC_FOTO")

@@ -1,4 +1,4 @@
-package com.api.domain.business;
+package com.api.domain.model;
 
 import java.io.Serializable;
 import java.util.Arrays;
