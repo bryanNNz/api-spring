@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "TB_ALB")
@@ -40,7 +43,8 @@ public class Album implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date lancamento;
 	
-	@OneToMany(mappedBy = "album")
+	@JsonIgnore
+	@OneToMany(mappedBy = "album", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Musica> musicas;
 	
 	@Lob

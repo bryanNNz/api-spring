@@ -53,6 +53,9 @@ public class Musica implements Serializable {
 	@JoinColumn(name = "GNR_ID", referencedColumnName = "GNR_ID")
 	private GeneroMusical generoMusical;
 	
+	@Column(name = "MSC_VOTOS")
+	private Long votes;
+	
 	@Lob
 	@Column(name = "MSC_FOTO")
 	@Type(type = "org.hibernate.type.BinaryType")
@@ -118,6 +121,8 @@ public class Musica implements Serializable {
 		this.foto = foto;
 	}
 
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -127,6 +132,7 @@ public class Musica implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((lancamento == null) ? 0 : lancamento.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((votes == null) ? 0 : votes.hashCode());
 		return result;
 	}
 
@@ -161,7 +167,20 @@ public class Musica implements Serializable {
 				return false;
 		} else if (!nome.equals(other.nome))
 			return false;
+		if (votes == null) {
+			if (other.votes != null)
+				return false;
+		} else if (!votes.equals(other.votes))
+			return false;
 		return true;
+	}
+
+	public Long getVotes() {
+		return votes;
+	}
+
+	public void setVotes(Long votes) {
+		this.votes = votes;
 	}
 	
 }

@@ -16,6 +16,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "TB_ART")
 public class Artista implements Serializable {
@@ -33,9 +35,11 @@ public class Artista implements Serializable {
 	@Column(name = "ART_BIO")
 	private String bio;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "artista")
 	private List<Album> albuns;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "artista")
 	private List<RedeSocialArtista> redesSociais;
 	

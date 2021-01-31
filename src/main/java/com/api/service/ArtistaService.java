@@ -1,6 +1,12 @@
 package com.api.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -20,7 +26,7 @@ public class ArtistaService {
 	}
 	
 	public Artista update(Artista artista) {
-		if(ObjectUtils.isEmpty(artista) || artista.getId() <= 0) {
+		if(ObjectUtils.isEmpty(artista)) {
 			throw new ApiException("ENTIDADE NAO EXISTE");
 		}
 		
@@ -40,6 +46,17 @@ public class ArtistaService {
 	public Artista findById(Long id) {
 		return this.artistaRepository.findById(id)
 				.orElseThrow(() -> new EntityNotFoundException(String.format("ARTISTA ID: [%s] NAO ENCONTRADO", id)));
+	}
+	
+	public List<Artista> findAll(Integer page, Integer size, String sort) {
+		Pageable paging = PageRequest.of(page, size, Sort.by(sort));
+		
+		Page<Artista> objs = this.artistaRepository.findAll(paging);
+		
+		if(!objs.hasContent())
+			new EntityNotFoundException("ENTIDADES NAO ENCONTRADAS");
+		
+		return objs.getContent();	
 	}
 	
 	public Artista persist(Artista artista) {
