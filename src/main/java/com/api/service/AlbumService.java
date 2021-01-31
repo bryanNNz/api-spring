@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import com.api.domain.exception.ApiException;
 import com.api.domain.exception.EntityNotFoundException;
 import com.api.domain.model.Album;
 import com.api.repository.AlbumRepository;
@@ -25,9 +24,8 @@ public class AlbumService {
 	}
 	
 	public Album update(Album album) {
-		if(ObjectUtils.isEmpty(album)) {
-			throw new ApiException("ENTIDADE NAO EXISTE");
-		}
+		if(ObjectUtils.isEmpty(album))
+			throw new IllegalArgumentException("INVALID ARGUMENT");
 		
 		return this.persist(album);
 	}
@@ -43,16 +41,16 @@ public class AlbumService {
 		
 	public Album findById(Long id) {
 		return this.albumRepository.findById(id)
-				.orElseThrow(() -> new EntityNotFoundException(String.format("ALBUM ID: [%s] NAO ENCONTRADO", id)));
+				.orElseThrow(() -> new EntityNotFoundException(String.format("ALBUM ID: [%s] NOT FOUND", id)));
 	}
 	
 	public List<Album> findByArtist(Long id, Integer page, Integer size) {
 		Pageable paging = PageRequest.of(page, size);
 		
-		Page<Album> objs = this.albumRepository.findByArtistPageable(id, paging);
+		Page<Album> objs = this.albumRepository.findByArtist(id, paging);
 		
 		if(!objs.hasContent())
-			throw new EntityNotFoundException("ENTIDADES NAO ENCONTRADAS");
+			throw new EntityNotFoundException(String.format("ALBUMS NOT FOUND FOR ARTIST ID [%s]", id));
 		
 		return objs.getContent();
 	}

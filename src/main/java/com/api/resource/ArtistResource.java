@@ -12,23 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.api.domain.model.Artista;
-import com.api.service.ArtistaService;
+import com.api.domain.model.Artist;
+import com.api.service.ArtistService;
 
 @Controller
 @RequestMapping
-public class ArtistaResource {
+public class ArtistResource {
 	
 	@Autowired
-	private ArtistaService artistService;
+	private ArtistService artistService;
 	
 	@RequestMapping(
 			method = RequestMethod.POST,
 			value = "/artist",
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Artista> save(@RequestBody Artista artista) {
-		Artista obj = this.artistService.create(artista);
+	public ResponseEntity<Artist> save(@RequestBody Artist artist) {
+		Artist obj = this.artistService.create(artist);
 		return ResponseEntity.ok().body(obj); 
 	}
 	
@@ -37,8 +37,8 @@ public class ArtistaResource {
 			value = "/artist",
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Artista> update(@RequestBody Artista artista) {
-		Artista obj = this.artistService.update(artista);
+	public ResponseEntity<Artist> update(@RequestBody Artist artist) {
+		Artist obj = this.artistService.update(artist);
 		return ResponseEntity.ok().body(obj);
 	}
 
@@ -53,12 +53,12 @@ public class ArtistaResource {
 			method = RequestMethod.GET,
 			value = "/artists",
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Artista>> getAll(
+	public ResponseEntity<List<Artist>> getAll(
 			@RequestParam(defaultValue = "0") Integer page,
 			@RequestParam(defaultValue = "10") Integer size,
 			@RequestParam(defaultValue = "name") String sort) {
 		
-		List<Artista> objs = this.artistService.findAll(page, size, sort);
+		List<Artist> objs = this.artistService.findAll(page, size, sort);
 		
 		return ResponseEntity.ok().body(objs);
 	}

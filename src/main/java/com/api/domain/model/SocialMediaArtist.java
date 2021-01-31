@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "TB_RDS_ART")
-public class RedeSocialArtista implements Serializable {
+public class SocialMediaArtist implements Serializable {
 	private static final long serialVersionUID = 7979004524053213892L;
 	
 	@Id
@@ -25,16 +25,16 @@ public class RedeSocialArtista implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "RDS_ID", referencedColumnName = "RDS_ID")
-	private RedeSocial redeSocial;
+	private SocialMedia socialMedia;
 	
 	@ManyToOne
 	@JoinColumn(name = "ART_ID", referencedColumnName = "ART_ID")
-	private Artista artista;
+	private Artist artist;
 	
 	@Column(name = "RDS_ART_LINK")
 	private String link;
 
-	public RedeSocialArtista() {
+	public SocialMediaArtist() {
 		
 	}
 	
@@ -46,20 +46,20 @@ public class RedeSocialArtista implements Serializable {
 		this.id = id;
 	}
 
-	public RedeSocial getRedeSocial() {
-		return redeSocial;
+	public SocialMedia getSocialMedia() {
+		return socialMedia;
 	}
 
-	public void setRedeSocial(RedeSocial redeSocial) {
-		this.redeSocial = redeSocial;
+	public void setSocialMedia(SocialMedia socialMedia) {
+		this.socialMedia = socialMedia;
 	}
 
-	public Artista getArtista() {
-		return artista;
+	public Artist getArtist() {
+		return artist;
 	}
 
-	public void setArtista(Artista artista) {
-		this.artista = artista;
+	public void setArtist(Artist artist) {
+		this.artist = artist;
 	}
 
 	public String getLink() {
@@ -74,10 +74,10 @@ public class RedeSocialArtista implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((artista == null) ? 0 : artista.hashCode());
+		result = prime * result + ((artist == null) ? 0 : artist.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((link == null) ? 0 : link.hashCode());
-		result = prime * result + ((redeSocial == null) ? 0 : redeSocial.hashCode());
+		result = prime * result + ((socialMedia == null) ? 0 : socialMedia.hashCode());
 		return result;
 	}
 
@@ -89,11 +89,11 @@ public class RedeSocialArtista implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		RedeSocialArtista other = (RedeSocialArtista) obj;
-		if (artista == null) {
-			if (other.artista != null)
+		SocialMediaArtist other = (SocialMediaArtist) obj;
+		if (artist == null) {
+			if (other.artist != null)
 				return false;
-		} else if (!artista.equals(other.artista))
+		} else if (!artist.equals(other.artist))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -105,12 +105,12 @@ public class RedeSocialArtista implements Serializable {
 				return false;
 		} else if (!link.equals(other.link))
 			return false;
-		if (redeSocial == null) {
-			if (other.redeSocial != null)
+		if (socialMedia == null) {
+			if (other.socialMedia != null)
 				return false;
-		} else if (!redeSocial.equals(other.redeSocial))
+		} else if (!socialMedia.equals(other.socialMedia))
 			return false;
 		return true;
 	}
-	
+
 }

@@ -11,20 +11,20 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "TB_RDS")
-public class RedeSocial implements Serializable {
-	private static final long serialVersionUID = -3712656693574902461L;
+@Table(name = "TB_GNR")
+public class MusicGenre implements Serializable {
+	private static final long serialVersionUID = -9105800905287700075L;
 	
 	@Id
-	@SequenceGenerator(name = "SQ_RDS_ID", sequenceName = "SQ_RDS_ID", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_RDS_ID")
-	@Column(name = "RDS_ID")
+	@SequenceGenerator(name = "SQ_GNR_ID", sequenceName = "SQ_GNR_ID", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_GNR_ID")
+	@Column(name = "GNR_ID")
 	private Long id;
 	
-	@Column(name = "RDS_DESC")
-	private String descricao;
+	@Column(name = "GNR_DESC")
+	private String description;
 
-	public RedeSocial() {
+	public MusicGenre() {
 		
 	}
 	
@@ -36,19 +36,19 @@ public class RedeSocial implements Serializable {
 		this.id = id;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
@@ -61,11 +61,11 @@ public class RedeSocial implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		RedeSocial other = (RedeSocial) obj;
-		if (descricao == null) {
-			if (other.descricao != null)
+		MusicGenre other = (MusicGenre) obj;
+		if (description == null) {
+			if (other.description != null)
 				return false;
-		} else if (!descricao.equals(other.descricao))
+		} else if (!description.equals(other.description))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -74,5 +74,5 @@ public class RedeSocial implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 }

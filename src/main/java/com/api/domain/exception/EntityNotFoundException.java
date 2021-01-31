@@ -11,8 +11,8 @@ public class EntityNotFoundException extends ApiException {
 		super(message);
 	}
 	
-	public EntityNotFoundException(String message, Throwable causa) {
-		super(message, causa);
+	public EntityNotFoundException(String message, Throwable cause) {
+		super(message, cause);
 	}
 
 }

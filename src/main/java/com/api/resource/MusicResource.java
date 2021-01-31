@@ -12,23 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.api.domain.model.Musica;
-import com.api.service.MusicaService;
+import com.api.domain.model.Music;
+import com.api.service.MusicService;
 
 @Controller
 @RequestMapping
-public class MusicaResource {
+public class MusicResource {
 
 	@Autowired
-	private MusicaService musicService;
+	private MusicService musicService;
 	
 	@RequestMapping(
 			method = RequestMethod.POST,
 			value = "/music",
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Musica> save(@RequestBody Musica musica) {
-		Musica obj = this.musicService.create(musica);
+	public ResponseEntity<Music> save(@RequestBody Music music) {
+		Music obj = this.musicService.create(music);
 		
 		return ResponseEntity.ok().body(obj); 
 	}
@@ -38,8 +38,8 @@ public class MusicaResource {
 			value = "/music",
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Musica> update(@RequestBody Musica musica) {
-		Musica obj = this.musicService.update(musica);
+	public ResponseEntity<Music> update(@RequestBody Music music) {
+		Music obj = this.musicService.update(music);
 		
 		return ResponseEntity.ok().body(obj);
 	}
@@ -55,11 +55,11 @@ public class MusicaResource {
 			method = RequestMethod.GET,
 			value = "/musics",
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Musica>> getLikeName(
+	public ResponseEntity<List<Music>> getLikeName(
 			@RequestParam(name = "name") String name,
 			@RequestParam(name = "page", defaultValue = "0") Integer page,
 			@RequestParam(name = "size", defaultValue = "10") Integer size) {
-		List<Musica> objs = this.musicService.findLikeName(name, page, size);
+		List<Music> objs = this.musicService.findLikeName(name, page, size);
 		
 		return ResponseEntity.ok().body(objs);
 	}
@@ -68,11 +68,11 @@ public class MusicaResource {
 			method = RequestMethod.GET,
 			value = "/musics/genre/{id}",
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Musica>> getByGenre(
+	public ResponseEntity<List<Music>> getByGenre(
 			@PathVariable Long id,
 			@RequestParam(name = "page", defaultValue = "0") Integer page,
 			@RequestParam(name = "size", defaultValue = "10") Integer size) {
-		List<Musica> objs = this.musicService.findByGenre(id, page, size);
+		List<Music> objs = this.musicService.findByGenre(id, page, size);
 		
 		return ResponseEntity.ok().body(objs);
 	}
@@ -81,11 +81,11 @@ public class MusicaResource {
 			method = RequestMethod.GET,
 			value = "/musics/artist/{id}",
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Musica>> getByArtist(
+	public ResponseEntity<List<Music>> getByArtist(
 			@PathVariable Long id,
 			@RequestParam(name = "page", defaultValue = "0") Integer page,
 			@RequestParam(name = "size", defaultValue = "10") Integer size) {
-		List<Musica> objs = this.musicService.findByArtist(id, page, size);
+		List<Music> objs = this.musicService.findByArtist(id, page, size);
 		
 		return ResponseEntity.ok().body(objs);
 	}
@@ -94,24 +94,24 @@ public class MusicaResource {
 			method = RequestMethod.GET,
 			value = "/musics/album/{id}",
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Musica>> getMusicsByAlbum(
+	public ResponseEntity<List<Music>> getMusicsByAlbum(
 			@PathVariable Long id,
 			@RequestParam(name = "page", defaultValue = "0") Integer page,
 			@RequestParam(name = "size", defaultValue = "10") Integer size) {
-		List<Musica> objs = this.musicService.findByAlbum(id, page, size);
+		List<Music> objs = this.musicService.findByAlbum(id, page, size);
 		
 		return ResponseEntity.ok().body(objs);
 	}
 	
 	@RequestMapping(
 			method = RequestMethod.GET,
-			value = "/musics",
+			value = "/musics/ranking",
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Musica>> getMusicsOrderByVotes(
+	public ResponseEntity<List<Music>> getMusicsOrderByVotes(
 			@RequestParam(name = "page", defaultValue = "0") Integer page,
 			@RequestParam(name = "size", defaultValue = "10") Integer size,
 			@RequestParam(defaultValue = "votes") String sort) {
-		List<Musica> objs = this.musicService.findAll(page, size, sort);
+		List<Music> objs = this.musicService.findAll(page, size, sort);
 		
 		return ResponseEntity.ok().body(objs);
 	}

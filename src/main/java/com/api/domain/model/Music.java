@@ -21,7 +21,7 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "TB_MSC")
-public class Musica implements Serializable {
+public class Music implements Serializable {
 	private static final long serialVersionUID = -8528475585291568947L;
 	
 	@Id
@@ -31,15 +31,15 @@ public class Musica implements Serializable {
 	private Long id;
 	
 	@Column(name = "MSC_NOME")
-	private String nome;
+	private String name;
 	
 	@Temporal(TemporalType.TIME)
 	@Column(name = "MSC_DURACAO")
-	private Date duracao;
+	private Date musicTime;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "MSC_LANCAMENTO")
-	private Date lancamento;
+	private Date release;
 	
 	@ManyToOne
 	@JoinColumn(name = "ALB_ID", referencedColumnName = "ALB_ID")
@@ -47,11 +47,11 @@ public class Musica implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "ART_ID", referencedColumnName = "ART_ID")
-	private Artista artista;
+	private Artist artist;
 	
 	@ManyToOne
 	@JoinColumn(name = "GNR_ID", referencedColumnName = "GNR_ID")
-	private GeneroMusical generoMusical;
+	private MusicGenre musicGenre;
 	
 	@Column(name = "MSC_VOTOS")
 	private Long votes;
@@ -59,12 +59,12 @@ public class Musica implements Serializable {
 	@Lob
 	@Column(name = "MSC_FOTO")
 	@Type(type = "org.hibernate.type.BinaryType")
-	private byte[] foto;
+	private byte[] image;
 
-	public Musica() {
+	public Music() {
 		
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -73,28 +73,28 @@ public class Musica implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Date getDuracao() {
-		return duracao;
+	public Date getMusicTime() {
+		return musicTime;
 	}
 
-	public void setDuracao(Date duracao) {
-		this.duracao = duracao;
+	public void setMusicTime(Date musicTime) {
+		this.musicTime = musicTime;
 	}
 
-	public Date getLancamento() {
-		return lancamento;
+	public Date getRelease() {
+		return release;
 	}
 
-	public void setLancamento(Date lancamento) {
-		this.lancamento = lancamento;
+	public void setRelease(Date release) {
+		this.release = release;
 	}
 
 	public Album getAlbum() {
@@ -105,34 +105,50 @@ public class Musica implements Serializable {
 		this.album = album;
 	}
 
-	public Artista getArtista() {
-		return artista;
+	public Artist getArtist() {
+		return artist;
 	}
 
-	public void setArtista(Artista artista) {
-		this.artista = artista;
+	public void setArtist(Artist artist) {
+		this.artist = artist;
 	}
 
-	public byte[] getFoto() {
-		return foto;
+	public MusicGenre getMusicGenre() {
+		return musicGenre;
 	}
 
-	public void setFoto(byte[] foto) {
-		this.foto = foto;
+	public void setMusicGenre(MusicGenre musicGenre) {
+		this.musicGenre = musicGenre;
 	}
 
+	public Long getVotes() {
+		return votes;
+	}
 
+	public void setVotes(Long votes) {
+		this.votes = votes;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((duracao == null) ? 0 : duracao.hashCode());
-		result = prime * result + Arrays.hashCode(foto);
+		result = prime * result + ((album == null) ? 0 : album.hashCode());
+		result = prime * result + ((artist == null) ? 0 : artist.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((lancamento == null) ? 0 : lancamento.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + ((votes == null) ? 0 : votes.hashCode());
+		result = prime * result + Arrays.hashCode(image);
+		result = prime * result + ((musicGenre == null) ? 0 : musicGenre.hashCode());
+		result = prime * result + ((musicTime == null) ? 0 : musicTime.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((release == null) ? 0 : release.hashCode());
 		return result;
 	}
 
@@ -144,43 +160,45 @@ public class Musica implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Musica other = (Musica) obj;
-		if (duracao == null) {
-			if (other.duracao != null)
+		Music other = (Music) obj;
+		if (album == null) {
+			if (other.album != null)
 				return false;
-		} else if (!duracao.equals(other.duracao))
+		} else if (!album.equals(other.album))
 			return false;
-		if (!Arrays.equals(foto, other.foto))
+		if (artist == null) {
+			if (other.artist != null)
+				return false;
+		} else if (!artist.equals(other.artist))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (lancamento == null) {
-			if (other.lancamento != null)
-				return false;
-		} else if (!lancamento.equals(other.lancamento))
+		if (!Arrays.equals(image, other.image))
 			return false;
-		if (nome == null) {
-			if (other.nome != null)
+		if (musicGenre == null) {
+			if (other.musicGenre != null)
 				return false;
-		} else if (!nome.equals(other.nome))
+		} else if (!musicGenre.equals(other.musicGenre))
 			return false;
-		if (votes == null) {
-			if (other.votes != null)
+		if (musicTime == null) {
+			if (other.musicTime != null)
 				return false;
-		} else if (!votes.equals(other.votes))
+		} else if (!musicTime.equals(other.musicTime))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (release == null) {
+			if (other.release != null)
+				return false;
+		} else if (!release.equals(other.release))
 			return false;
 		return true;
-	}
-
-	public Long getVotes() {
-		return votes;
-	}
-
-	public void setVotes(Long votes) {
-		this.votes = votes;
 	}
 	
 }

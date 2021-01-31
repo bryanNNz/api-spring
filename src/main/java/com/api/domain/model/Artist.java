@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "TB_ART")
-public class Artista implements Serializable {
+public class Artist implements Serializable {
 	private static final long serialVersionUID = 8197146171259256030L;
 	
 	@Id
@@ -30,23 +31,27 @@ public class Artista implements Serializable {
 	private Long id;
 	
 	@Column(name = "ART_NOME")
-	private String nome;
+	private String name;
 	
 	@Column(name = "ART_BIO")
 	private String bio;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "artista")
-	private List<Album> albuns;
+	@OneToMany(mappedBy = "artist")
+	private List<Album> albums;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "artista")
-	private List<RedeSocialArtista> redesSociais;
+	@OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<SocialMediaArtist> socialMedias;
 	
 	@Lob
 	@Column(name = "ART_FOTO")
 	@Type(type="org.hibernate.type.BinaryType")
-	private byte[] foto;
+	private byte[] image;
+
+	public Artist() {
+		
+	}
 
 	public Long getId() {
 		return id;
@@ -56,12 +61,12 @@ public class Artista implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getBio() {
@@ -72,28 +77,28 @@ public class Artista implements Serializable {
 		this.bio = bio;
 	}
 
-	public List<Album> getAlbuns() {
-		return albuns;
+	public List<Album> getAlbums() {
+		return albums;
 	}
 
-	public void setAlbuns(List<Album> albuns) {
-		this.albuns = albuns;
+	public void setAlbums(List<Album> albums) {
+		this.albums = albums;
 	}
 
-	public List<RedeSocialArtista> getRedesSociais() {
-		return redesSociais;
+	public List<SocialMediaArtist> getSocialMedias() {
+		return socialMedias;
 	}
 
-	public void setRedesSociais(List<RedeSocialArtista> redesSociais) {
-		this.redesSociais = redesSociais;
+	public void setSocialMedias(List<SocialMediaArtist> socialMedias) {
+		this.socialMedias = socialMedias;
 	}
 
-	public byte[] getFoto() {
-		return foto;
+	public byte[] getImage() {
+		return image;
 	}
 
-	public void setFoto(byte[] foto) {
-		this.foto = foto;
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
 	@Override
@@ -101,9 +106,9 @@ public class Artista implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((bio == null) ? 0 : bio.hashCode());
-		result = prime * result + Arrays.hashCode(foto);
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + Arrays.hashCode(image);
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -115,25 +120,25 @@ public class Artista implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Artista other = (Artista) obj;
+		Artist other = (Artist) obj;
 		if (bio == null) {
 			if (other.bio != null)
 				return false;
 		} else if (!bio.equals(other.bio))
-			return false;
-		if (!Arrays.equals(foto, other.foto))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (nome == null) {
-			if (other.nome != null)
+		if (!Arrays.equals(image, other.image))
+			return false;
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!nome.equals(other.nome))
+		} else if (!name.equals(other.name))
 			return false;
 		return true;
 	}
-	
+
 }

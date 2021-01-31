@@ -37,25 +37,25 @@ public class Album implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "ART_ID", referencedColumnName = "ART_ID")
-	private Artista artista;
+	private Artist artist;
 	
 	@Column(name = "ALB_DT_LANCAMENTO")
 	@Temporal(TemporalType.DATE)
-	private Date lancamento;
+	private Date release;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "album", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Musica> musicas;
+	private List<Music> musics;
 	
 	@Lob
 	@Column(name = "ALB_FOTO")
 	@Type(type = "org.hibernate.type.BinaryType")
-	private byte[] foto;
+	private byte[] image;
 
 	public Album() {
 		
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -64,45 +64,45 @@ public class Album implements Serializable {
 		this.id = id;
 	}
 
-	public Artista getArtista() {
-		return artista;
+	public Artist getArtist() {
+		return artist;
 	}
 
-	public void setArtista(Artista artista) {
-		this.artista = artista;
+	public void setArtist(Artist artist) {
+		this.artist = artist;
 	}
 
-	public Date getLancamento() {
-		return lancamento;
+	public Date getRelease() {
+		return release;
 	}
 
-	public void setLancamento(Date lancamento) {
-		this.lancamento = lancamento;
+	public void setRelease(Date release) {
+		this.release = release;
 	}
 
-	public List<Musica> getMusicas() {
-		return musicas;
+	public List<Music> getMusics() {
+		return musics;
 	}
 
-	public void setMusicas(List<Musica> musicas) {
-		this.musicas = musicas;
+	public void setMusics(List<Music> musics) {
+		this.musics = musics;
 	}
 
-	public byte[] getFoto() {
-		return foto;
+	public byte[] getImage() {
+		return image;
 	}
 
-	public void setFoto(byte[] foto) {
-		this.foto = foto;
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + Arrays.hashCode(foto);
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((lancamento == null) ? 0 : lancamento.hashCode());
+		result = prime * result + Arrays.hashCode(image);
+		result = prime * result + ((release == null) ? 0 : release.hashCode());
 		return result;
 	}
 
@@ -115,19 +115,19 @@ public class Album implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Album other = (Album) obj;
-		if (!Arrays.equals(foto, other.foto))
-			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (lancamento == null) {
-			if (other.lancamento != null)
+		if (!Arrays.equals(image, other.image))
+			return false;
+		if (release == null) {
+			if (other.release != null)
 				return false;
-		} else if (!lancamento.equals(other.lancamento))
+		} else if (!release.equals(other.release))
 			return false;
 		return true;
 	}
-	
+		
 }
