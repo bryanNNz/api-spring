@@ -50,8 +50,9 @@ public class MusicResource {
 	@RequestMapping(
 			method = RequestMethod.DELETE,
 			value = "/music/{id}")
-	public void delete(@PathVariable Long id) {
+	public ResponseEntity<?> delete(@PathVariable Long id) {
 		this.musicService.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(

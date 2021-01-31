@@ -2,6 +2,7 @@ package com.api.service;
 
 import java.util.List;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,7 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import com.api.domain.exception.EntityNotFoundException;
+import com.api.domain.exception.ApiConstraintViolationException;
+import com.api.domain.exception.ApiEntityNotFoundException;
 import com.api.domain.model.Album;
 import com.api.repository.AlbumRepository;
 
@@ -34,14 +36,19 @@ public class AlbumService {
 		List<Album> objs = this.albumRepository.findByArtistId(id);
 		
 		if(ObjectUtils.isEmpty(objs))
-			throw new EntityNotFoundException(String.format("ALBUMS NOT FOUND FOR ARTIST ID: [%s]", id));
+			throw new ApiEntityNotFoundException(String.format("ALBUMS NOT FOUND FOR ARTIST ID: [%s]", id));
 		
-		this.albumRepository.deleteAll(objs);
+		try {
+			this.albumRepository.deleteAll(objs);			
+		} catch(Exception e) {
+			if(e.getCause() instanceof ConstraintViolationException)
+				throw new ApiConstraintViolationException(String.format("ARTIST ID: [%s] CANNOT BE DELETED BECAUSE IT IS BEING REFERENCED IN THE SYSTEM", id));
+		}
 	}
 		
 	public Album findById(Long id) {
 		return this.albumRepository.findById(id)
-				.orElseThrow(() -> new EntityNotFoundException(String.format("ALBUM ID: [%s] NOT FOUND", id)));
+				.orElseThrow(() -> new ApiEntityNotFoundException(String.format("ALBUM ID: [%s] NOT FOUND", id)));
 	}
 	
 	public List<Album> findByArtist(Long id, Integer page, Integer size) {
@@ -50,7 +57,7 @@ public class AlbumService {
 		Page<Album> objs = this.albumRepository.findByArtistId(id, paging);
 		
 		if(!objs.hasContent())
-			throw new EntityNotFoundException(String.format("ALBUMS NOT FOUND FOR ARTIST ID [%s]", id));
+			throw new ApiEntityNotFoundException(String.format("ALBUMS NOT FOUND FOR ARTIST ID [%s]", id));
 		
 		return objs.getContent();
 	}

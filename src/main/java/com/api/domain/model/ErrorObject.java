@@ -8,6 +8,8 @@ public class ErrorObject implements Serializable {
 	private String type;
 	
 	private String title;
+	
+	private Integer status;
 		
 	private String detail;
 	
@@ -49,12 +51,21 @@ public class ErrorObject implements Serializable {
 		this.instance = instance;
 	}
 
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((detail == null) ? 0 : detail.hashCode());
 		result = prime * result + ((instance == null) ? 0 : instance.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
@@ -78,6 +89,11 @@ public class ErrorObject implements Serializable {
 			if (other.instance != null)
 				return false;
 		} else if (!instance.equals(other.instance))
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
 			return false;
 		if (title == null) {
 			if (other.title != null)

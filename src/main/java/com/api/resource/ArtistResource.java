@@ -47,8 +47,9 @@ public class ArtistResource {
 	@RequestMapping(
 			method = RequestMethod.DELETE,
 			value = "/artist/{id}")
-	public void delete(@PathVariable Long id) {
+	public ResponseEntity<?> delete(@PathVariable Long id) {
 		this.artistService.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(

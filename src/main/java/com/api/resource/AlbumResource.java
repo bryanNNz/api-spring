@@ -43,13 +43,14 @@ public class AlbumResource {
 	@RequestMapping(
 			method = RequestMethod.DELETE,
 			value = "/albums/artist/{id}")
-	public void delete(@PathVariable Long id) {
+	public ResponseEntity<?> delete(@PathVariable Long id) {
 		this.albumService.deleteByArtist(id);
+		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(
 			method = RequestMethod.GET,
-			value = "/album/artist/{id}",
+			value = "/albums/artist/{id}",
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Album>> getByArtist(
 			@PathVariable Long id,

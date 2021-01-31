@@ -24,6 +24,11 @@ public class ErrorObjectBuilder {
 		return this;
 	}
 	
+	public ErrorObjectBuilder status(Integer status) {
+		this.error.setStatus(status);
+		return this;
+	}
+	
 	
 	public ErrorObjectBuilder detail(String detail) {
 		this.error.setDetail(detail);
