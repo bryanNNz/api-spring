@@ -3,6 +3,9 @@ package com.api.resource;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -10,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.api.domain.model.Artist;
 import com.api.service.ArtistService;
@@ -54,11 +56,8 @@ public class ArtistResource {
 			value = "/artists",
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Artist>> getAll(
-			@RequestParam(defaultValue = "0") Integer page,
-			@RequestParam(defaultValue = "10") Integer size,
-			@RequestParam(defaultValue = "name") String sort) {
-		
-		List<Artist> objs = this.artistService.findAll(page, size, sort);
+			@PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable paging) {
+		List<Artist> objs = this.artistService.findAll(paging);
 		
 		return ResponseEntity.ok().body(objs);
 	}

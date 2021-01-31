@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -45,7 +44,7 @@ public class MusicService {
 				.orElseThrow(() -> new EntityNotFoundException(String.format("MUSIC ID: [%s] NOT FOUND", id)));
 	}
 	
-	public List<Music> findLikeName(String name, Integer page, Integer size) {
+	public List<Music> findLikeName(String name, Integer page, Integer size) { //VER
 		Pageable paging = PageRequest.of(page, size);
 		
 		Page<Music> objs = this.musicRepository.findByNameContaining(name, paging);
@@ -59,7 +58,7 @@ public class MusicService {
 	public List<Music> findByGenre(Long id, Integer page, Integer size) {
 		Pageable paging = PageRequest.of(page, size);
 		
-		Page<Music> objs = this.musicRepository.findByMusicGenre(id, paging);
+		Page<Music> objs = this.musicRepository.findByMusicGenreId(id, paging);
 		
 		if(!objs.hasContent())
 			new EntityNotFoundException(String.format("MUSICS NOT FOUND FOR GENRE ID [%s]", id));
@@ -70,7 +69,7 @@ public class MusicService {
 	public List<Music> findByArtist(Long id, Integer page, Integer size) {
 		Pageable paging = PageRequest.of(page, size);
 		
-		Page<Music> objs = this.musicRepository.findByArtist(id, paging);
+		Page<Music> objs = this.musicRepository.findByArtistId(id, paging);
 		
 		if(!objs.hasContent())
 			new EntityNotFoundException(String.format("MUSICS NOT FOUND FOR ARTIST ID [%s]", id));
@@ -81,7 +80,7 @@ public class MusicService {
 	public List<Music> findByAlbum(Long id, Integer page, Integer size) {
 		Pageable paging = PageRequest.of(page, size);
 		
-		Page<Music> objs = this.musicRepository.findByAlbum(id, paging);
+		Page<Music> objs = this.musicRepository.findByAlbumId(id, paging);
 		
 		if(!objs.hasContent())
 			new EntityNotFoundException(String.format("MUSICS NOT FOUND FOR ALBUM ID [%s]", id));
@@ -89,9 +88,7 @@ public class MusicService {
 		return objs.getContent();
 	}
 	
-	public List<Music> findAll(Integer page, Integer size, String sort) {
-		Pageable paging = PageRequest.of(page, size, Sort.by(sort));
-		
+	public List<Music> findAll(Pageable paging) {
 		Page<Music> objs = this.musicRepository.findAll(paging);
 		
 		if(!objs.hasContent())

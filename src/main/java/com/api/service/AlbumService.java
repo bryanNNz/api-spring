@@ -31,7 +31,7 @@ public class AlbumService {
 	}
 	
 	public void deleteByArtist(Long id) {
-		List<Album> objs = this.albumRepository.findByArtist(id);
+		List<Album> objs = this.albumRepository.findByArtistId(id);
 		
 		if(ObjectUtils.isEmpty(objs))
 			throw new EntityNotFoundException(String.format("ALBUMS NOT FOUND FOR ARTIST ID: [%s]", id));
@@ -47,7 +47,7 @@ public class AlbumService {
 	public List<Album> findByArtist(Long id, Integer page, Integer size) {
 		Pageable paging = PageRequest.of(page, size);
 		
-		Page<Album> objs = this.albumRepository.findByArtist(id, paging);
+		Page<Album> objs = this.albumRepository.findByArtistId(id, paging);
 		
 		if(!objs.hasContent())
 			throw new EntityNotFoundException(String.format("ALBUMS NOT FOUND FOR ARTIST ID [%s]", id));

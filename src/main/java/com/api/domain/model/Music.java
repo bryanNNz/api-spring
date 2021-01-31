@@ -19,6 +19,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "TB_MSC")
 public class Music implements Serializable {
@@ -41,10 +43,12 @@ public class Music implements Serializable {
 	@Column(name = "MSC_LANCAMENTO")
 	private Date release;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "ALB_ID", referencedColumnName = "ALB_ID")
 	private Album album;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "ART_ID", referencedColumnName = "ART_ID")
 	private Artist artist;

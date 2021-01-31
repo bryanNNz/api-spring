@@ -6,7 +6,7 @@ public class ErrorObjectBuilder {
 	private ErrorObject error;
 	
 	private ErrorObjectBuilder() {
-		error = new ErrorObject();
+		this.error = new ErrorObject();
 	}
 	
 	public static ErrorObjectBuilder builder() {

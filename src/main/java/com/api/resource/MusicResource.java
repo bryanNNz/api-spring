@@ -3,6 +3,9 @@ package com.api.resource;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -108,10 +111,8 @@ public class MusicResource {
 			value = "/musics/ranking",
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Music>> getMusicsOrderByVotes(
-			@RequestParam(name = "page", defaultValue = "0") Integer page,
-			@RequestParam(name = "size", defaultValue = "10") Integer size,
-			@RequestParam(defaultValue = "votes") String sort) {
-		List<Music> objs = this.musicService.findAll(page, size, sort);
+			@PageableDefault(page = 0, size = 10, sort = "votes", direction = Direction.DESC) Pageable paging) {
+		List<Music> objs = this.musicService.findAll(paging);
 		
 		return ResponseEntity.ok().body(objs);
 	}
